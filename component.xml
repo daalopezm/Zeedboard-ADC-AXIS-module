@@ -6,7 +6,7 @@
   <spirit:version>1.0</spirit:version>
   <spirit:busInterfaces>
     <spirit:busInterface>
-      <spirit:name>M_AXIS</spirit:name>
+      <spirit:name>m_axis</spirit:name>
       <spirit:busType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="axis" spirit:version="1.0"/>
       <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="interface" spirit:name="axis_rtl" spirit:version="1.0"/>
       <spirit:master/>
@@ -63,7 +63,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>ASSOCIATED_BUSIF</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.ASSOCIATED_BUSIF">M_AXIS</spirit:value>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.ASSOCIATED_BUSIF">m_axis</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>ASSOCIATED_RESET</spirit:name>
@@ -90,7 +90,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>a52e0d95</spirit:value>
+            <spirit:value>68240692</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -106,22 +106,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>a52e0d95</spirit:value>
-          </spirit:parameter>
-        </spirit:parameters>
-      </spirit:view>
-      <spirit:view>
-        <spirit:name>xilinx_testbench</spirit:name>
-        <spirit:displayName>Test Bench</spirit:displayName>
-        <spirit:envIdentifier>:vivado.xilinx.com:simulation.testbench</spirit:envIdentifier>
-        <spirit:modelName>axis_max1119x_adc</spirit:modelName>
-        <spirit:fileSetRef>
-          <spirit:localName>xilinx_testbench_view_fileset</spirit:localName>
-        </spirit:fileSetRef>
-        <spirit:parameters>
-          <spirit:parameter>
-            <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>8e6fa7a6</spirit:value>
+            <spirit:value>68240692</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -135,7 +120,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>b758ea4c</spirit:value>
+            <spirit:value>0e91ac6a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -246,22 +231,17 @@
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>ASK_SAMPLE_OFF</spirit:name>
         <spirit:displayName>Ask Sample Off</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ASK_SAMPLE_OFF">600</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ASK_SAMPLE_OFF">30</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>ASK_SAMPLE_ON</spirit:name>
         <spirit:displayName>Ask Sample On</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ASK_SAMPLE_ON">300</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ASK_SAMPLE_ON">15</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>PER_SCLK</spirit:name>
         <spirit:displayName>Per Sclk</spirit:displayName>
         <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PER_SCLK">10</spirit:value>
-      </spirit:modelParameter>
-      <spirit:modelParameter spirit:dataType="integer">
-        <spirit:name>SEND_CLK</spirit:name>
-        <spirit:displayName>Send Clk</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.SEND_CLK">10000</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -271,8 +251,7 @@
       <spirit:file>
         <spirit:name>src/axis_max1119x_adc.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_a52e0d95</spirit:userFileType>
-        <spirit:userFileType>IMPORTED_FILE</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_68240692</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -280,17 +259,6 @@
       <spirit:file>
         <spirit:name>src/axis_max1119x_adc.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>IMPORTED_FILE</spirit:userFileType>
-      </spirit:file>
-    </spirit:fileSet>
-    <spirit:fileSet>
-      <spirit:name>xilinx_testbench_view_fileset</spirit:name>
-      <spirit:file>
-        <spirit:name>src/axis_max1119x_adc_behav.wcfg</spirit:name>
-        <spirit:fileType>unknown</spirit:fileType>
-        <spirit:userFileType>IMPORTED_FILE</spirit:userFileType>
-        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
-        <spirit:userFileType>USED_IN_testbench</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -298,22 +266,22 @@
       <spirit:file>
         <spirit:name>xgui/axis_max1119x_adc_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_b758ea4c</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_0e91ac6a</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
   </spirit:fileSets>
-  <spirit:description>Axis design for max11198_adc</spirit:description>
+  <spirit:description>Read your ADC max11198</spirit:description>
   <spirit:parameters>
     <spirit:parameter>
       <spirit:name>ASK_SAMPLE_OFF</spirit:name>
       <spirit:displayName>Ask Sample Off</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_OFF">600</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_OFF">30</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>ASK_SAMPLE_ON</spirit:name>
       <spirit:displayName>Ask Sample On</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_ON">300</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_ON">15</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>PER_SCLK</spirit:name>
@@ -323,11 +291,6 @@
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>
       <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Component_Name" spirit:order="1">axis_max1119x_adc_v1_0</spirit:value>
-    </spirit:parameter>
-    <spirit:parameter>
-      <spirit:name>SEND_CLK</spirit:name>
-      <spirit:displayName>Send Clk</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SEND_CLK">10000</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -341,18 +304,21 @@
       <xilinx:taxonomies>
         <xilinx:taxonomy>/UserIP</xilinx:taxonomy>
       </xilinx:taxonomies>
-      <xilinx:displayName>AXIS_max1119x_adc_v1_0</xilinx:displayName>
+      <xilinx:displayName>axis_max1119x_adc_v1_0</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
-      <xilinx:coreRevision>20</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2024-07-22T06:14:01Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>4</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2024-07-22T21:40:41Z</xilinx:coreCreationDateTime>
+      <xilinx:tags>
+        <xilinx:tag xilinx:name="nopcore"/>
+      </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2024.1</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="f1d21fdc"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="03426b9f"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="1a5e1922"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="2350808f"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="badd1e06"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="6d007a1d"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="749d1d23"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="d3699aa4"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="c87beef8"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

@@ -37,15 +37,6 @@ proc validate_PARAM_VALUE.PER_SCLK { PARAM_VALUE.PER_SCLK } {
 	return true
 }
 
-proc update_PARAM_VALUE.SEND_CLK { PARAM_VALUE.SEND_CLK } {
-	# Procedure called to update SEND_CLK when any of the dependent parameters in the arguments change
-}
-
-proc validate_PARAM_VALUE.SEND_CLK { PARAM_VALUE.SEND_CLK } {
-	# Procedure called to validate SEND_CLK
-	return true
-}
-
 
 proc update_MODELPARAM_VALUE.ASK_SAMPLE_OFF { MODELPARAM_VALUE.ASK_SAMPLE_OFF PARAM_VALUE.ASK_SAMPLE_OFF } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
@@ -60,10 +51,5 @@ proc update_MODELPARAM_VALUE.ASK_SAMPLE_ON { MODELPARAM_VALUE.ASK_SAMPLE_ON PARA
 proc update_MODELPARAM_VALUE.PER_SCLK { MODELPARAM_VALUE.PER_SCLK PARAM_VALUE.PER_SCLK } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.PER_SCLK}] ${MODELPARAM_VALUE.PER_SCLK}
-}
-
-proc update_MODELPARAM_VALUE.SEND_CLK { MODELPARAM_VALUE.SEND_CLK PARAM_VALUE.SEND_CLK } {
-	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
-	set_property value [get_property value ${PARAM_VALUE.SEND_CLK}] ${MODELPARAM_VALUE.SEND_CLK}
 }
 

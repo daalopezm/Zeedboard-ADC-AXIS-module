@@ -34,17 +34,14 @@ module axis_max1119x_adc(
 );
 
     // Timer constants
-    parameter ASK_SAMPLE_OFF = 600; // 0.1-second interval (100 ms)
-    parameter ASK_SAMPLE_ON = 300; // 500 ms interval
+    parameter ASK_SAMPLE_OFF = 30; // 0.1-second interval (100 ms)
+    parameter ASK_SAMPLE_ON = 15; // 500 ms interval
     parameter PER_SCLK = 10;
-    parameter SEND_CLK = 10000; 
 
     // Timer variables
     reg [31:0] counter;
     reg [31:0] counter_sclk;
-    reg [31:0] counter_send;
     reg state;
-    reg send;
     
     // Shift register for data collection
     reg [15:0] shift_reg;
@@ -52,7 +49,6 @@ module axis_max1119x_adc(
     
     // Aux
     reg read_data;
-    assign miso_memory=miso;
 
     // Initialization
     initial begin
@@ -62,67 +58,72 @@ module axis_max1119x_adc(
         bit_count <= 5'd0;
         read_data <= 0; 
         SCLK_PIN <= 0;
-        send <=0;
         m_axis_tvalid <= 1; 
     end
 
     // Main logic
     always @(posedge clk) begin
-        counter <= counter + 1;
-        counter_sclk <= counter_sclk + 1;
-        counter_send <= counter_send + 1;
-        if (reset) begin
-            counter <= 0;          
-            state <= 0;   
+        if (reset) begin 
             counter_sclk <= 0;
-            SCLK_PIN <= 0; 
-        end
-            
-        if (state == 0) begin
-            ask_sample <= 1'b1;
-            if (counter >= ASK_SAMPLE_OFF) begin
-                counter <= 0;
-                state <= 1;
-            end
+            SCLK_PIN <= 0;
         end else begin
-            ask_sample <= 1'b0;
-            if (counter >= ASK_SAMPLE_ON) begin
-                counter <= 0;
-                state <= 0;
+            counter_sclk <= counter_sclk + 1;            
+            if (counter_sclk >= PER_SCLK) begin
+                counter_sclk <= 0;
+                SCLK_PIN <= ~SCLK_PIN;
             end
-        end
-        
-        if (counter_sclk >= PER_SCLK) begin
-            counter_sclk <= 0;
-            SCLK_PIN <= ~SCLK_PIN;
-        end
-        
-        if (counter_send >= SEND_CLK) begin
-            counter_send <= 0;
-            send <= ~send;
-        end
-        
+        end        
     end
     
     always @(posedge SCLK_PIN) begin
-        if (ask_sample && read_data) begin
-            
-            shift_reg <= {shift_reg[15:0], miso_memory};
-            bit_count <= bit_count + 1;
-            if (bit_count == 16) begin
-                bit_count <= 0; // Reset bit counter for next data collection
-                read_data <= 0;
+        if (reset) begin 
+            counter <= 0;
+            ask_sample <= 0;
+            state <= 0;
+            read_data <=0;
+        end else begin
+            counter <= counter + 1;
+            if (state == 0) begin
+                ask_sample <= 1'b1;
+                if (counter >= ASK_SAMPLE_OFF) begin
+                    counter <= 0;
+                    state <= 1;
+                end
+            end else begin
+                ask_sample <= 1'b0;
+                if (counter >= ASK_SAMPLE_ON) begin
+                    counter <= 0;
+                    state <= 0;
+                    read_data <= 1;                                       
+                end
             end
-        end
-    end
-    
-    always @(posedge ask_sample) begin
-        read_data <= 1;
-    end
-    
-    always @(posedge send) begin
-        m_axis_tdata <= shift_reg;
-    end
-    
+       
+            if (bit_count < 16 && ask_sample && read_data) begin    
+                // Shift each bit to the left and insert miso at the least significant bit
+                shift_reg[15] <= shift_reg[14];
+                shift_reg[14] <= shift_reg[13];
+                shift_reg[13] <= shift_reg[12];
+                shift_reg[12] <= shift_reg[11];
+                shift_reg[11] <= shift_reg[10];
+                shift_reg[10] <= shift_reg[9];
+                shift_reg[9] <= shift_reg[8];
+                shift_reg[8] <= shift_reg[7];
+                shift_reg[7] <= shift_reg[6];
+                shift_reg[6] <= shift_reg[5];
+                shift_reg[5] <= shift_reg[4];
+                shift_reg[4] <= shift_reg[3];
+                shift_reg[3] <= shift_reg[2];
+                shift_reg[2] <= shift_reg[1];
+                shift_reg[1] <= shift_reg[0];
+                shift_reg[0] <= miso; // Insert the new bit at the least significant position   
+                bit_count <= bit_count + 1;
+            end else if (bit_count >= 16) begin
+                bit_count <= 0; // Reset bit counter for next data collection;
+                read_data <= 0;
+                m_axis_tdata <= shift_reg;
+                m_axis_tvalid <= 1;                
+            end
+        end       
+    end    
     
 endmodule
