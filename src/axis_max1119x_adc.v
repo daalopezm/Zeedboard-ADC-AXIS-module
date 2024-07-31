@@ -25,12 +25,12 @@ module axis_max1119x_adc(
     input wire reset,      // Reset signal
     input wire miso,       // Master Input Slave Output
     output reg ask_sample,     // Chip Select output
-    //output reg [15:0] data_out, // Data read from the slave
     output reg SCLK_PIN,    // Serial Clock output
     
-    // AXIS interface
+    // AXIS Master interface
+    input wire m_axis_tready,      // AXIS ready signal
     output reg [15:0] m_axis_tdata, // AXIS data output
-    output reg m_axis_tvalid       // AXIS valid signal
+    output reg m_axis_tvalid      // AXIS valid signal    
 );
 
     // Timer constants
@@ -97,7 +97,6 @@ module axis_max1119x_adc(
                     read_data <= 1;                                       
                 end
             end
-       
             if (bit_count < 16 && ask_sample && read_data) begin    
                 // Shift each bit to the left and insert miso at the least significant bit
                 shift_reg[15] <= shift_reg[14];
@@ -120,8 +119,12 @@ module axis_max1119x_adc(
             end else if (bit_count >= 16) begin
                 bit_count <= 0; // Reset bit counter for next data collection;
                 read_data <= 0;
-                m_axis_tdata <= shift_reg;
-                m_axis_tvalid <= 1;                
+                if (m_axis_tready) begin
+                    m_axis_tdata <= shift_reg;
+                    m_axis_tvalid <= 1;                
+                end else begin
+                    m_axis_tvalid <= 0;
+                end                
             end
         end       
     end    
