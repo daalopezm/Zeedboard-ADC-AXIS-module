@@ -82,6 +82,7 @@ module axis_max1119x_adc(
             ask_sample <= 0;
             state <= 0;
             read_data <=0;
+            m_axis_tvalid <= 0;
         end else begin
             counter <= counter + 1;
             case (state)
