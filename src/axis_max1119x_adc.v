@@ -22,7 +22,7 @@
 
 module axis_max1119x_adc(
     input wire clk,        // System clock
-    input wire reset,      // Reset signal
+    input wire resetn,      // Reset signal
     input wire miso,       // Master Input Slave Output
     output reg ask_sample,     // Chip Select output
     output reg SCLK_PIN,    // Serial Clock output
@@ -34,8 +34,8 @@ module axis_max1119x_adc(
 );
 
     // Timer constants
-    parameter ASK_SAMPLE_OFF = 30; // 0.1-second interval (100 ms)
-    parameter ASK_SAMPLE_ON = 15; // 500 ms interval
+    parameter ASK_SAMPLE_OFF = 10; // 0.1-second interval (100 ms)
+    parameter ASK_SAMPLE_ON = 5; // 500 ms interval
     parameter PER_SCLK = 10;
 
     // Timer variables
@@ -53,6 +53,7 @@ module axis_max1119x_adc(
     // Initialization
     initial begin
         counter <= 0;
+        ask_sample <= 0;
         state <= 0;
         counter_sclk <= 0;
         bit_count <= 5'd0;
@@ -63,7 +64,7 @@ module axis_max1119x_adc(
 
     // Main logic
     always @(posedge clk) begin
-        if (reset) begin 
+        if (!resetn) begin 
             counter_sclk <= 0;
             SCLK_PIN <= 0;
         end else begin
@@ -76,28 +77,33 @@ module axis_max1119x_adc(
     end
     
     always @(posedge SCLK_PIN) begin
-        if (reset) begin 
+        if (!resetn) begin 
             counter <= 0;
             ask_sample <= 0;
             state <= 0;
             read_data <=0;
         end else begin
             counter <= counter + 1;
-            if (state == 0) begin
-                ask_sample <= 1'b1;
-                if (counter >= ASK_SAMPLE_OFF) begin
-                    counter <= 0;
-                    state <= 1;
+            case (state)
+                0: begin
+                    ask_sample <= 1'b1;
+                    if (counter >= ASK_SAMPLE_OFF) begin
+                        counter <= 0;  // Reset counter after transitioning states
+                        state <= 1;
+                    end
                 end
-            end else begin
-                ask_sample <= 1'b0;
-                if (counter >= ASK_SAMPLE_ON) begin
-                    counter <= 0;
-                    state <= 0;
-                    read_data <= 1;                                       
+                
+                1: begin
+                    ask_sample <= 1'b0;
+                    if (counter >= ASK_SAMPLE_ON) begin
+                        counter <= 0;  // Reset counter after transitioning states
+                        state <= 0;
+                        read_data <= 1;                                       
+                    end
                 end
-            end
-            if (bit_count < 16 && ask_sample && read_data) begin    
+            endcase
+            if (bit_count < 16 && ask_sample && read_data) begin  
+                m_axis_tvalid <= 0;  
                 // Shift each bit to the left and insert miso at the least significant bit
                 shift_reg[15] <= shift_reg[14];
                 shift_reg[14] <= shift_reg[13];
@@ -124,7 +130,7 @@ module axis_max1119x_adc(
                     m_axis_tvalid <= 1;                
                 end else begin
                     m_axis_tvalid <= 0;
-                end                
+                end           
             end
         end       
     end    

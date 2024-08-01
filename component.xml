@@ -48,10 +48,16 @@
             <spirit:name>RST</spirit:name>
           </spirit:logicalPort>
           <spirit:physicalPort>
-            <spirit:name>reset</spirit:name>
+            <spirit:name>resetn</spirit:name>
           </spirit:physicalPort>
         </spirit:portMap>
       </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>POLARITY</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.RESET.POLARITY" spirit:choiceRef="choice_list_74b5137e">ACTIVE_LOW</spirit:value>
+        </spirit:parameter>
+      </spirit:parameters>
     </spirit:busInterface>
     <spirit:busInterface>
       <spirit:name>clk</spirit:name>
@@ -75,7 +81,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>ASSOCIATED_RESET</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.ASSOCIATED_RESET">reset</spirit:value>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.ASSOCIATED_RESET">resetn</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
@@ -98,7 +104,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>32e6e4e7</spirit:value>
+            <spirit:value>b3bee2dc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -114,7 +120,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>32e6e4e7</spirit:value>
+            <spirit:value>b3bee2dc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -128,7 +134,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>0e91ac6a</spirit:value>
+            <spirit:value>a7ea6641</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -153,7 +159,7 @@
         </spirit:wire>
       </spirit:port>
       <spirit:port>
-        <spirit:name>reset</spirit:name>
+        <spirit:name>resetn</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
@@ -266,13 +272,34 @@
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
+  <spirit:choices>
+    <spirit:choice>
+      <spirit:name>choice_list_74b5137e</spirit:name>
+      <spirit:enumeration>ACTIVE_HIGH</spirit:enumeration>
+      <spirit:enumeration>ACTIVE_LOW</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_cb8bbb58</spirit:name>
+      <spirit:enumeration>15</spirit:enumeration>
+      <spirit:enumeration>30</spirit:enumeration>
+      <spirit:enumeration>45</spirit:enumeration>
+      <spirit:enumeration>60</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_d26948e7</spirit:name>
+      <spirit:enumeration>30</spirit:enumeration>
+      <spirit:enumeration>60</spirit:enumeration>
+      <spirit:enumeration>90</spirit:enumeration>
+      <spirit:enumeration>120</spirit:enumeration>
+    </spirit:choice>
+  </spirit:choices>
   <spirit:fileSets>
     <spirit:fileSet>
       <spirit:name>xilinx_anylanguagesynthesis_view_fileset</spirit:name>
       <spirit:file>
         <spirit:name>src/axis_max1119x_adc.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_32e6e4e7</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_b3bee2dc</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -287,7 +314,7 @@
       <spirit:file>
         <spirit:name>xgui/axis_max1119x_adc_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_0e91ac6a</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_a7ea6641</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -297,12 +324,12 @@
     <spirit:parameter>
       <spirit:name>ASK_SAMPLE_OFF</spirit:name>
       <spirit:displayName>Ask Sample Off</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_OFF">30</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_OFF" spirit:choiceRef="choice_list_d26948e7">30</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>ASK_SAMPLE_ON</spirit:name>
       <spirit:displayName>Ask Sample On</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_ON">15</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.ASK_SAMPLE_ON" spirit:choiceRef="choice_list_cb8bbb58">15</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>PER_SCLK</spirit:name>
@@ -327,19 +354,19 @@
       </xilinx:taxonomies>
       <xilinx:displayName>axis_max1119x_adc_v1_0</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
-      <xilinx:coreRevision>12</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2024-07-31T03:31:45Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>20</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2024-08-01T08:07:17Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="nopcore"/>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2024.1</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="00bafd5b"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="de7671f3"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="13d8e5e9"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="207a3e2a"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="40d5abe0"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="f82473c6"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="d3699aa4"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="c87beef8"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="3f5539ca"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>
