@@ -30,12 +30,14 @@ module axis_max1119x_adc(
     // AXIS Master interface
     input wire m_axis_tready,      // AXIS ready signal
     output reg [15:0] m_axis_tdata, // AXIS data output
-    output reg m_axis_tvalid      // AXIS valid signal    
+    output reg m_axis_tvalid,      // AXIS valid signal
+    output reg m_axis_tlast,       // AXIS last signal
+    output reg [1:0] m_axis_tkeep  // AXIS keep signal     
 );
 
     // Timer constants
-    parameter ASK_SAMPLE_OFF = 10; // 0.1-second interval (100 ms)
-    parameter ASK_SAMPLE_ON = 5; // 500 ms interval
+    parameter ASK_SAMPLE_OFF = 30; // 0.1-second interval (100 ms)
+    parameter ASK_SAMPLE_ON = 15; // 500 ms interval
     parameter PER_SCLK = 10;
 
     // Timer variables
@@ -60,6 +62,8 @@ module axis_max1119x_adc(
         read_data <= 0; 
         SCLK_PIN <= 0;
         m_axis_tvalid <= 1; 
+        m_axis_tlast <= 0; 
+        m_axis_tkeep <= 2'b00; 
     end
 
     // Main logic
@@ -83,6 +87,8 @@ module axis_max1119x_adc(
             state <= 0;
             read_data <=0;
             m_axis_tvalid <= 0;
+            m_axis_tlast <= 0;
+            m_axis_tkeep <= 2'b00;
         end else begin
             counter <= counter + 1;
             case (state)
@@ -129,9 +135,13 @@ module axis_max1119x_adc(
                 if (m_axis_tready) begin
                     m_axis_tdata <= shift_reg;
                     m_axis_tvalid <= 1;                
+                    m_axis_tkeep <= 2'b11; // Both bytes are valid
+                    m_axis_tlast <= 1; // Signal this is the last data beat of the transaction                
                 end else begin
                     m_axis_tvalid <= 0;
-                end           
+                    m_axis_tlast <= 0;
+                    m_axis_tkeep <= 2'b00;
+                end         
             end
         end       
     end    
